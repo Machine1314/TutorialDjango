@@ -1,0 +1,107 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/png">
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/png">
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+    <title>UDLA App</title>
+</head>
+<body style="background-color:#C7C7C7;">
+<script type="text/javascript">
+                let suma = 0;
+
+
+
+</script>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info">
+    <strong>{{message}}</strong>
+</div>
+{% endfor %}
+{% endif %}
+<div class="container-fluid">
+    <form method="POST">{% csrf_token %}
+        <div>
+            <label for="begin">
+                Fecha Inicio
+            </label>
+            <input type="date" id="begin" name="begin"
+                   placeholder="dd-mm-yyyy" value="{{beginDate}}"
+                   min="1997-01-01" max="2030-12-31" required>
+            <label for="end">
+                Fecha Fin
+            </label>
+            <input type="date" id="end" name="end"
+                   placeholder="dd-mm-yyyy" value="{{endDate}}"
+                   min="1997-01-01" max="2030-12-31" required>
+            <button class="btn btn-primary" type="submit">Filtrar</button>
+        </div>
+
+    </form>
+    <h2>Listas de Prestamos</h2>
+    <table class="table table-striped table-light">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Estado</th>
+            <th scope="col">ID Equipo</th>
+            <th scope="col">Fecha Inicio</th>
+            <th scope="col">Fecha Fin</th>
+            <th scope="col">Fecha Entrega</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for prestamo in prestamos %}
+        <tr>
+            <td>{{ prestamo.codigo }}</td>
+            <td>{{ prestamo.usuario }}</td>
+            <td>{{ prestamo.estado }}</td>
+            <td>{{ prestamo.equipo }}</td>
+            <td>{{ prestamo.fechaInicio }}</td>
+            <td>{{ prestamo.fechaFin }}</td>
+            <td>{{ prestamo.fechaEntrega }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h2>Listas de Deudores</h2>
+    <table class="table table-striped table-light">
+        <thead>
+        <tr>
+            <th scope="col">Usuario</th>
+            <th scope="col">Deuda</th>
+            <th scope="col">Días Cobrados</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for deudor in deudores %}
+        <tr>
+            <td>{{ deudor.nombre }}</td>
+            <td>${{ deudor.deuda }}</td>
+            <td>{{ deudor.dias }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
